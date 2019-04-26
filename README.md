@@ -1,3 +1,7 @@
+# Easy Gitlab Setup
+This project provides a simple way to install gitlab + gitlab-ci/cd via docker images.
+Follow the Setup section to get started.
+
 ## Setup
 Define your hostname as environment variable:
 ```bash
@@ -18,12 +22,15 @@ after the installation has finished¹. Visit your specified host (at port 80) an
 ² If yor registration token is not set correctly (e.g. by not running the setup script with source) you have to set it manually: visit `https://\<host>/admin/runners` copy the token and add it as environment variable with `export GL_CI_REG_TOKEN=<token>`.
 
 #### Further steps
+The following steps should be done to finish the setup and adjust gitlab to your personal need:
 
-* Add global labels
+* Add (global) labels
 * Create group(s)
 * Create repos
 * Add ci configuration
 
+## Uninstall
+To remove gitlab simply run `./uninstall.sh`
 
 ## Further reading for Gitlab:
 - [Install gitlab runner in docker](https://docs.gitlab.com/runner/install/docker.html#docker-image-installation-and-configuration)
