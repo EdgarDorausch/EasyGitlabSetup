@@ -1,5 +1,5 @@
 # Easy Gitlab Setup
-This project provides a simple way to install gitlab + gitlab-ci/cd via docker images.
+This project provides a simple way to install gitlab + gitlab-ci/cd via docker images. Therefore a docker-compuse cluster will be created automatically containing containers with the `gitlab-ce` and the `gitlab-runner` image. All local data will be stored in volumes mapped to `./gitlab` and `./gitlab-runner` on the host machine.
 Follow the Setup section to get started.
 
 ## Setup
@@ -19,7 +19,7 @@ after the installation has finished¹. Visit your specified host (at port 80) an
 
 ------
 ¹ You can display the container logs with `sudo docker-compose logs -f`
-² If yor registration token is not set correctly (e.g. by not running the setup script with source) you have to set it manually: visit `https://\<host>/admin/runners` copy the token and add it as environment variable with `export GL_CI_REG_TOKEN=<token>`.
+² If yor registration token is not set correctly (e.g. by not running the setup script with source) you have to set it manually: visit `https://<host>/admin/runners` copy the token and add it as environment variable with `export GL_CI_REG_TOKEN=<token>`.
 
 #### Further steps
 The following steps should be done to finish the setup and adjust gitlab to your personal need:
