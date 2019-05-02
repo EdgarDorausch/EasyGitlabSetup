@@ -5,8 +5,12 @@ read -r -p "Are You Sure? [Yes/n] " input
 case $input in 
   [Y][e][s])
     echo "Uninstall gitlab...";
-    sudo docker-compose stop;
-    sudo docker-compose rm;
+    sudo docker stop gitlab;
+    sudo docker stop gitlab-runner;
+
+    sudo docker rm gitlab;
+    sudo docker rm gitlab-runner;
+
     sudo rm -r ./gitlab ./gitlab-runner;
   ;;
   [n])
