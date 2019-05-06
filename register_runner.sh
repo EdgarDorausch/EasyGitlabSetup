@@ -8,9 +8,8 @@ if [ -z "$GL_HOSTNAME" ];
   
   # Register Gitlab Runner
   else sudo -E docker run \
-    --network="host" \
     --rm -t -i \
-    -v /home/edgar/Projects/Gitlab_docker_test/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register \
+    -v $(pwd)/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register \
     --non-interactive \
     --executor "docker" \
     --docker-image alpine:3 \
