@@ -11,6 +11,9 @@ case $input in
     sudo docker rm gitlab;
     sudo docker rm gitlab-runner;
 
+    sudo docker rmi gitlab/gitlab-ce:latest;
+    sudo docker rmi gitlab/gitlab-runner:latest;
+
     sudo rm -r ./gitlab ./gitlab-runner;
   ;;
   [n])

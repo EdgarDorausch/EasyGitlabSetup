@@ -1,11 +1,16 @@
 #!/bin/bash
 
+export GL_HOSTNAME=$(hostname):1080
+
 if [ -z "$GL_HOSTNAME" ];
   then echo "GL_HOSTNAME (environment variable) is not defined!";
   
   elif [ -z "$GL_CI_REG_TOKEN" ];
   then echo "GL_CI_REG_TOKEN (environment variable) is not defined! Please visit http://$GL_HOSTNAME/admin/runners to get the current registration token";
   
+  echo "GL_HOSTNAME $GL_HOSTNAME"
+  echo "GL_CI_REG_TOKEN $GL_CI_REG_TOKEN" 
+
   # Register Gitlab Runner
   else sudo -E docker run \
     --rm -t -i \

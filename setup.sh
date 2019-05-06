@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export GL_HOSTNAME=$(hostname)
+
 if [ -z "$GL_HOSTNAME" ];
   then echo "GL_HOSTNAME (environment variable) is not defined!";
   else
@@ -17,7 +19,7 @@ if [ -z "$GL_HOSTNAME" ];
     sudo -E docker run --detach \
       -e GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=$GL_CI_REG_TOKEN \
       --hostname $GL_HOSTNAME \
-      --publish 443:443 --publish 80:80 --publish 22:22 \
+      --publish 1443:443 --publish 1080:80 --publish 1022:22 \
       --name gitlab \
       --restart always \
       --volume /gitlab/config:/etc/gitlab \
