@@ -1,12 +1,10 @@
 #!/bin/bash
 
-export GL_HOSTNAME=$(hostname):1080
+# Check/set hostname
+echo "GL_HOSTNAME is set to '${GL_HOSTNAME:=$(hostname)}'";
 
-if [ -z "$GL_HOSTNAME" ];
-  then echo "GL_HOSTNAME (environment variable) is not defined!";
-  
-  elif [ -z "$GL_CI_REG_TOKEN" ];
-  then echo "GL_CI_REG_TOKEN (environment variable) is not defined! Please visit http://$GL_HOSTNAME/admin/runners to get the current registration token";
+if [ -z "$GL_CI_REG_TOKEN" ];
+  then echo "GL_CI_REG_TOKEN (environment variable) is not defined! Please visit http://$GL_HOSTNAME:1080/admin/runners to get the current registration token";
   
   echo "GL_HOSTNAME $GL_HOSTNAME"
   echo "GL_CI_REG_TOKEN $GL_CI_REG_TOKEN" 
@@ -18,7 +16,7 @@ if [ -z "$GL_HOSTNAME" ];
     --non-interactive \
     --executor "docker" \
     --docker-image alpine:3 \
-    --url "http://$GL_HOSTNAME/" \
+    --url "http://$GL_HOSTNAME:1080/" \
     --registration-token $GL_CI_REG_TOKEN \
     --description "docker-runner" \
     --run-untagged="true" \
