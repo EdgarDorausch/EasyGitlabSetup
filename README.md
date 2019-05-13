@@ -34,6 +34,9 @@ The following steps should be done to finish the setup and adjust gitlab to your
 ## Uninstall
 To remove gitlab simply run `./uninstall.sh`
 
+## Backup
+To create a backup simply execute the `./create_backup.sh` script. (use -h flag for help and -c to store configuration-files/secrets too)
+
 ## Further reading for Gitlab:
 - [Install gitlab runner in docker](https://docs.gitlab.com/runner/install/docker.html#docker-image-installation-and-configuration)
 - [Run docker containers in gitlab-ci](https://docs.gitlab.com/ce/ci/docker/using_docker_images.html)
