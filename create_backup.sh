@@ -6,20 +6,20 @@ This script creates a backup for gitlab. All backup data is stored in the gitlab
 (The subdirectories storing the following content: data -> all git data; config -> configuration files+secrets of gitlab)
 
  Options:
-  -c      Saves gitlab configuration/secrets too
+  -n      No Config: Gitlab configuration/secrets is not stored
   -h      Display this help and exit
 "
 }
 
-config_flag=false
+CONFIG_FLAG=true
 
 # --- Options processing -------------------------------------------
 
-while getopts ":hc" optname
+while getopts ":hn" optname
   do
     case "$optname" in
       "h") usage; exit 0;;
-      "c") config_flag=true;;
+      "n") CONFIG_FLAG=false;;
       "?")
         echo "Unknown option $OPTARG"
         exit 0;
@@ -42,11 +42,17 @@ while getopts ":hc" optname
 CONFIG_PATH="./gitlab_backups/config/"
 DATA_PATH="./gitlab_backups/data/"
 
+# Create directories
+mkdir -p "$CONFIG_PATH"
+mkdir -p "$DATA_PATH"
+
 echo "========= CREATE BACKUP ========="
-export FILENAME=$( sudo docker exec -t gitlab gitlab-rake gitlab:backup:create | grep -oP '(?<=Creating backup archive: ).*(?=\.tar)')
+OUTPUT=$( sudo docker exec -t gitlab gitlab-rake gitlab:backup:create )
+FILENAME=$( echo "$OUTPUT" | grep -oP '(?<=Creating backup archive: ).*(?=\.tar)')
+echo "$OUTPUT"
 echo "Backup stored under $DATA_PATH$FILENAME.tar"
 
-if $config_flag; then
+if $CONFIG_FLAG; then
   echo "========= STORE CONFIG DATA ========="
 
 
