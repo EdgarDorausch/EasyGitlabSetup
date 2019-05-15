@@ -49,16 +49,15 @@ Set token with \`./register_runner -t <TOKEN>\`
 
   # Register Gitlab Runner
   else echo "Registration token: $GL_CI_REG_TOKEN";
-    # sudo -E docker run \
-    # --rm -t -i \
-    # -v $(pwd)/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register \
-    # --non-interactive \
-    # --executor "docker" \
-    # --docker-image alpine:3 \
-    # --url "http://$GL_HOSTNAME:1080/" \
-    # --registration-token $GL_CI_REG_TOKEN \
-    # --description "docker-runner" \
-    # --run-untagged="true" \
-    # --locked="false";
+    sudo -E docker run \
+    --rm -t -i \
+    -v $(pwd)/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register \
+    --non-interactive \
+    --executor "docker" \
+    --docker-image alpine:3 \
+    --url "http://$GL_HOSTNAME:1080/" \
+    --registration-token $GL_CI_REG_TOKEN \
+    --description "docker-runner" \
+    --run-untagged="true" \
+    --locked="false";
 fi
-
