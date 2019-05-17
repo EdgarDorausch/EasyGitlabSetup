@@ -1,16 +1,55 @@
 #!/bin/bash
 
+usage() {
+  echo -n "
+This script connects the gitlab runner so its possible to runn ci pipelines on this runner
+
+ Options:
+  -t      Set custom registration token
+  -n      HostName (defaults to \$hostname if not set)
+  -h      Display this help and exit
+"
+}
+
+# --- Options processing -------------------------------------------
+
+while getopts ":ht:n:" optname
+  do
+    case "$optname" in
+      "h") usage; exit 0;;
+      "n") GL_HOSTNAME=$OPTARG;;
+      "t") GL_CI_REG_TOKEN=$OPTARG;;
+      "?")
+        echo "Unknown option $OPTARG"
+        exit 0;
+        ;;
+      ":")
+        echo "No argument value for option $OPTARG"
+        exit 0;
+        ;;
+      *)
+        echo "Unknown error while processing options"
+        exit 0;
+        ;;
+    esac
+  done
+
+
+############## Begin Script Here ###################
+####################################################
+
 # Check/set hostname
-echo "GL_HOSTNAME is set to '${GL_HOSTNAME:=$(hostname)}'";
+echo "Hostname: ${GL_HOSTNAME:=$(hostname)}";
 
 if [ -z "$GL_CI_REG_TOKEN" ];
-  then echo "GL_CI_REG_TOKEN (environment variable) is not defined! Please visit http://$GL_HOSTNAME:1080/admin/runners to get the current registration token";
-  
-  echo "GL_HOSTNAME $GL_HOSTNAME"
-  echo "GL_CI_REG_TOKEN $GL_CI_REG_TOKEN" 
+  then echo -n "
+Registration token is not defined! Please visit http://$GL_HOSTNAME:1080/admin/runners to get the current registration token.
+Set token with \`./register_runner -t <TOKEN>\`
+";
 
   # Register Gitlab Runner
-  else sudo -E docker run \
+  else echo "Registration token: $GL_CI_REG_TOKEN";
+    sudo -E docker run \
     --rm -t -i \
     -v $(pwd)/gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register \
     --non-interactive \
@@ -22,4 +61,3 @@ if [ -z "$GL_CI_REG_TOKEN" ];
     --run-untagged="true" \
     --locked="false";
 fi
-
