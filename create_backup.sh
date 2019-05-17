@@ -43,8 +43,8 @@ CONFIG_PATH="./gitlab_backups/config/"
 DATA_PATH="./gitlab_backups/data/"
 
 # Create directories
-mkdir -p "$CONFIG_PATH"
-mkdir -p "$DATA_PATH"
+sudo mkdir -p "$CONFIG_PATH"
+sudo mkdir -p "$DATA_PATH"
 
 echo "========= CREATE BACKUP ========="
 OUTPUT=$( sudo docker exec -t gitlab gitlab-rake gitlab:backup:create )
