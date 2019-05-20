@@ -47,14 +47,14 @@ DATA_BASE_PATH="./gitlab_backups/data/"
 
 # Check if filename passed as argument
 if [ -z "$FILE_NAME" ]; then
-  echo "Please set filename (./restore_backup -f <filename>)"
+  echo "[ERROR] Please set filename (./restore_backup -f <filename>)"
   exit 1
 else
   BACKUP_BASE_NAME=$(echo "$FILE_NAME" | grep -oP '.*(?=_gitlab_backup\.tar)')
 
   # Check if BACKUP_BASE_NAME is not empty
   if [ -z "$BACKUP_BASE_NAME" ]; then
-    echo "\`$FILE_NAME\` has not the right backup file format"
+    echo "[ERROR] \`$FILE_NAME\` has not the right backup file format! (*_gitlab_backup.tar)"
     exit 1
   fi
 
@@ -62,7 +62,7 @@ else
 
   # Define path to the relevant files
   CONFIG_FILE="${CONFIG_BASE_PATH}${BACKUP_BASE_NAME}_gitlab_backup_gitlab.rb"
-  SECRETS_FILE="${CONFIG_BASE_PATH}{BACKUP_BASE_NAME}_gitlab_backup_gitlab-secrets.json"
+  SECRETS_FILE="${CONFIG_BASE_PATH}${BACKUP_BASE_NAME}_gitlab_backup_gitlab-secrets.json"
   BACKUP_FILE="${DATA_BASE_PATH}${BACKUP_BASE_NAME}_gitlab_backup.tar"
 
   # Check if the files are existing
@@ -79,9 +79,15 @@ else
     exit 1
   fi
 
-  # TODO Copy Config files...
-  # TODO Restore backup 
-  # sudo docker exec -it gitlab gitlab-rake gitlab:backup:restore BACKUP=$BACKUP_BASE_NAME
+  # Copy config files
+  echo ">>>> Copy config files..."
+  sudo cp $CONFIG_FILE ./gitlab/config
+  sudo cp $SECRETS_FILE ./gitlab/config
+  echo "Done!"
 
+  # Restore backup 
+  echo ">>>> Restore backup..."
+  sudo docker exec -it gitlab gitlab-rake gitlab:backup:restore BACKUP=$BACKUP_BASE_NAME
+  echo "Done!"
 
 fi
