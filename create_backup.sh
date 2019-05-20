@@ -50,7 +50,7 @@ echo "========= CREATE BACKUP ========="
 OUTPUT=$( sudo docker exec -t gitlab gitlab-rake gitlab:backup:create )
 FILENAME=$( echo "$OUTPUT" | grep -oP '(?<=Creating backup archive: ).*(?=\.tar)')
 echo "$OUTPUT"
-echo "Backup stored under $DATA_PATH$FILENAME.tar"
+echo ">>>> Backup stored under $DATA_PATH$FILENAME.tar"
 
 if $CONFIG_FLAG; then
   echo "========= STORE CONFIG DATA ========="

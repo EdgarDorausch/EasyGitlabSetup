@@ -43,7 +43,7 @@ echo "Hostname: ${GL_HOSTNAME:=$(hostname)}";
 
 if [ -z "$GL_CI_REG_TOKEN" ];
   then echo -n "
-Registration token is not defined! Please visit http://$GL_HOSTNAME:1080/admin/runners to get the current registration token.
+[ERROR] Registration token is not defined! Please visit http://$GL_HOSTNAME:1080/admin/runners to get the current registration token.
 Set token with \`./register_runner -t <TOKEN>\`
 ";
 
