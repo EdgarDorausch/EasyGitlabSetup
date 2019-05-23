@@ -43,6 +43,10 @@ The backup files may be owned by the root user so you need super-user rights to 
 ### Restore backup
 To restore a backup run `./restore_backup.sh -f <backup_file_name>` (use the -n flag to not restore configuration-files/secrets)
 
+## Interesting Settings
+ - Runner-Dashboard: http://jessie06:1080/admin/runners
+ - Visibility and access controls (default branch protection?, https access?, etc...): http://jessie06:1080/admin/application_settings
+ - (Issue) Labels: http://jessie06:1080/admin/labels (newly created labels may be imported only for new projects, so one have to add them to the existing ones manually)
 
 ## Further reading for Gitlab:
 - [Install gitlab runner in docker](https://docs.gitlab.com/runner/install/docker.html#docker-image-installation-and-configuration)
