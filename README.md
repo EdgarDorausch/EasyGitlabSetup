@@ -27,6 +27,31 @@ After this step you can visit the gitlab web app at your specified host and set 
 ¹ You can display the container logs with `sudo docker logs gitlab -f`
 ² If yor registration token is not set correctly (e.g. by not running the setup script with source) you have to set it manually: visit `https://<host>/admin/runners` copy the token and pass it as an argument: `./register_runner -t <token>`.
 
+## Pushing
+Since the gitlab ssh server runs on port 1022 one have to adjust the ssh configuration file. (user-scoped: `~/.ssh/config`; system-wide:`/etc/ssh/ssh_config`;
+For more information run `man ssh_config`)
+
+So you may have to add the following lines to the config file:
+```
+Host <name-in-the-url>
+  Hostname <name-resolves-to>
+  Post 1022
+```
+
+Because you may not want to establish every ssh connection to the specified host under port 1022 `Host` and `Hostname` should be different.
+
+### Example
+```
+Host nicepype_gitlab
+  Hostname jessie06
+  Post 1022
+```
+
+This rule will only be used when one tries to connect to 
+`git@nicepype_gitlab:<repository_path>.git`.
+This will be resolved to a connection to jessie06 under port 1022.
+
+
 ## Uninstall
 To remove gitlab simply run `./uninstall.sh`
 
