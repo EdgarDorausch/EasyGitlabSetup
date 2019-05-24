@@ -49,14 +49,22 @@ echo "Setup docker:"
 echo "Run gitlab-ce image"
 echo "============"
 
-install gitlab-ce
+NL=$'\n'
+
+# Configuration:
+# Custom backup path
+GL_BACKUP_PATH="gitlab_rails['backup_path']=\"/var/gitlab_backups\""
+# Set clone url to nicepype_gitlab
+GL_EXTERNAL_URL="external_url \"http://nicepype_gitlab\""
+
+#install gitlab-ce
 sudo -E docker run --detach \
   -e GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=$GL_CI_REG_TOKEN \
   --hostname $GL_HOSTNAME \
   --publish 1443:443 --publish 1080:80 --publish 1022:22 \
   --name gitlab \
   --restart always \
-  --env GITLAB_OMNIBUS_CONFIG="gitlab_rails['backup_path']=\"/var/gitlab_backups\"" \
+  --env GITLAB_OMNIBUS_CONFIG="$GL_BACKUP_PATH $NL $GL_EXTERNAL_URL" \
   --volume $(pwd)/gitlab/config:/etc/gitlab \
   --volume $(pwd)/gitlab/logs:/var/log/gitlab \
   --volume $(pwd)/gitlab/data:/var/opt/gitlab \
