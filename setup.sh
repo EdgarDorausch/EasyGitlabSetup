@@ -69,7 +69,7 @@ sudo -E docker run --detach \
   --volume $(pwd)/gitlab/logs:/var/log/gitlab \
   --volume $(pwd)/gitlab/data:/var/opt/gitlab \
   --volume $(pwd)/gitlab_backups/data:/var/gitlab_backups \
-  gitlab/gitlab-ce:latest
+  gitlab/gitlab-ce:11.11.2-ce.0
 
 echo "============"
 echo "Run gitlab-runner image"
