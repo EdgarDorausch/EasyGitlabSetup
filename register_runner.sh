@@ -55,7 +55,7 @@ Set token with \`./register_runner -t <TOKEN>\`
     --non-interactive \
     --executor "docker" \
     --docker-image alpine:3 \
-    --url "http://$GL_HOSTNAME:1080/" \
+    --url "http://$GL_HOSTNAME:80/" \
     --registration-token $GL_CI_REG_TOKEN \
     --description "docker-runner" \
     --run-untagged="true" \
